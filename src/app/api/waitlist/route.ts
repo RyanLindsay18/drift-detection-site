@@ -1,30 +1,40 @@
 import { Resend } from "resend";
 
-const resendApiKey = process.env.RESEND_API_KEY;
-const waitlistToEmail = process.env.WAITLIST_TO_EMAIL;
-
-const resend = resendApiKey ? new Resend(resendApiKey) : null;
-
 export async function POST(request: Request) {
+  const resendApiKey = process.env.RESEND_API_KEY;
+  const waitlistToEmail = process.env.WAITLIST_TO_EMAIL;
+
+  console.log("[waitlist] hit");
+  console.log("[waitlist] key present:", !!resendApiKey);
+  console.log("[waitlist] to email:", waitlistToEmail ?? "NOT SET");
+
+  if (!resendApiKey || !waitlistToEmail) {
+    console.error("[waitlist] Missing env vars");
+    return Response.json(
+      { error: "Server configuration missing." },
+      { status: 500 }
+    );
+  }
+
+  let email: string | undefined;
   try {
     const body = (await request.json()) as { email?: string };
-    const email = body.email?.trim();
+    email = body.email?.trim();
+  } catch (e) {
+    console.error("[waitlist] Failed to parse body:", e);
+    return Response.json({ error: "Invalid request." }, { status: 400 });
+  }
 
-    if (!email) {
-      return Response.json({ error: "Email is required." }, { status: 400 });
-    }
+  if (!email) {
+    return Response.json({ error: "Email is required." }, { status: 400 });
+  }
 
-    if (!resendApiKey || !waitlistToEmail || !resend) {
-      return Response.json(
-        {
-          error:
-            "Server email configuration is missing. Add RESEND_API_KEY and WAITLIST_TO_EMAIL.",
-        },
-        { status: 500 }
-      );
-    }
+  console.log("[waitlist] submitting email:", email);
 
-    await resend.emails.send({
+  const resend = new Resend(resendApiKey);
+
+  try {
+    const result = await resend.emails.send({
       from: "Drift Detection <onboarding@resend.dev>",
       to: waitlistToEmail,
       subject: "New Drift Detection beta signup",
@@ -32,11 +42,20 @@ export async function POST(request: Request) {
       text: `New beta signup: ${email}`,
     });
 
-    return Response.json({ ok: true });
-  } catch {
-    return Response.json(
-      { error: "Unable to submit right now. Please try again." },
-      { status: 500 }
-    );
+    console.log("[waitlist] Resend result:", JSON.stringify(result));
+
+    if (result.error) {
+      console.error("[waitlist] Resend error:", JSON.stringify(result.error));
+      return Response.json(
+        { error: result.error.message },
+        { status: 500 }
+      );
+    }
+
+    return Response.json({ ok: true, id: result.data?.id });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("[waitlist] Exception:", message);
+    return Response.json({ error: message }, { status: 500 });
   }
 }

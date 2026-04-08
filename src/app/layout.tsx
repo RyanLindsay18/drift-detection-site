@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
-  title: "Drift Detection",
+  title: "Driftpulse — Repo drift detection for fast-moving teams",
   description:
-    "Catch code drift, architecture drift, config drift, and docs drift before fast-moving AI-heavy repos turn messy.",
+    "A VS Code extension that detects code drift, architecture drift, config drift, and docs drift before AI-assisted shipping quietly breaks your repo.",
 };
 
 export default function RootLayout({
@@ -14,7 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }

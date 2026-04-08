@@ -17,7 +17,7 @@ const driftSignals = [
   {
     title: "Docs drift",
     description:
-      "README, prompts, setup notes, and actual code behavior stop matching, even though the repo still looks fine on the surface.",
+      "README, prompts, setup notes, and actual code behavior stop matching — even though the repo still looks fine on the surface.",
   },
 ];
 
@@ -33,13 +33,13 @@ const steps = [
     number: "01",
     title: "Install the extension",
     description:
-      "Add Drift Detection to VS Code and set your API key once.",
+      "Add Driftpulse to VS Code and set your API key once. No config files, no setup overhead.",
   },
   {
     number: "02",
     title: "Analyze the repo",
     description:
-      "The extension scans the codebase, prioritizes important files, and runs structured drift analysis.",
+      "Driftpulse scans the codebase, prioritizes important files, and runs structured drift analysis.",
   },
   {
     number: "03",
@@ -51,7 +51,7 @@ const steps = [
     number: "04",
     title: "Keep it monitored",
     description:
-      "Background monitoring re-runs analysis after meaningful file changes so drift shows up earlier.",
+      "Background monitoring re-runs analysis after meaningful file changes so drift surfaces early — not six weeks later.",
   },
 ];
 
@@ -90,15 +90,15 @@ export default function Home() {
             <div className="hero-badge">VS Code extension for repo drift</div>
 
             <h1 className="hero-title">
-              Catch <span className="gradient-text">repo drift</span> before fast
-              shipping turns into quiet chaos.
+              Catch <span className="gradient-text">repo drift</span> before
+              fast shipping turns into quiet chaos.
             </h1>
 
             <p className="hero-description">
-  A VS Code extension that scans your repo for code drift, architecture
-  drift, config drift, and docs drift — so AI-assisted shipping does not
-  quietly break structure over time.
-</p>
+              Driftpulse scans your repo for code drift, architecture drift,
+              config drift, and docs drift — so AI-assisted shipping does not
+              quietly break structure over time.
+            </p>
 
             <div className="hero-actions">
               <a href="#beta" className="button-primary">
@@ -175,16 +175,17 @@ export default function Home() {
                         rules
                       </div>
                       <div className="next-action">
-                        Tighten background re-analysis behavior during active runs
+                        Tighten background re-analysis behavior during active
+                        runs
                       </div>
                       <div className="next-action">
-                        Reduce duplicated contract definitions across repo docs and
-                        code
+                        Reduce duplicated contract definitions across repo docs
+                        and code
                       </div>
 
                       <div className="product-mini-note">
-                        Surface drift while you are still inside the repo, not six
-                        weeks later when it is harder to unwind.
+                        Surface drift while you are still inside the repo, not
+                        six weeks later when it is harder to unwind.
                       </div>
                     </div>
                   </div>
@@ -206,7 +207,9 @@ export default function Home() {
           <div className="three-col">
             {driftSignals.map((item) => (
               <div key={item.title} className="card p-6">
-                <h3 className="text-xl font-semibold text-white">{item.title}</h3>
+                <h3 className="text-xl font-semibold text-white">
+                  {item.title}
+                </h3>
                 <p className="mt-3 text-sm leading-7 text-white/65">
                   {item.description}
                 </p>
@@ -268,14 +271,15 @@ export default function Home() {
                 Get early access and help shape where this goes next.
               </h2>
               <p className="mt-5 max-w-xl text-base leading-7 text-white/65 md:text-lg">
-                The extension MVP is already working. The next step is getting it
-                into real repos, learning where the signal is strongest, and then
-                building the SaaS layer around history, workflows, and alerts.
+                The extension MVP is already working. The next step is getting
+                it into real repos, learning where the signal is strongest, and
+                then building the SaaS layer around history, workflows, and
+                alerts.
               </p>
 
               <div className="beta-points">
-                <div>• Extension-first MVP</div>
-                <div>• Real dev-tool positioning</div>
+                <div>• Extension-first MVP, works today</div>
+                <div>• Background monitoring built in</div>
                 <div>• Future SaaS layer: history, teams, alerts, billing</div>
               </div>
             </div>
