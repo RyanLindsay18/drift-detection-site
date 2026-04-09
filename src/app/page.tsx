@@ -102,7 +102,7 @@ export default function Home() {
 
             <div className="hero-actions">
   
-    href="https://marketplace.visualstudio.com/items?itemName=driftpulse.driftpulse"
+<a    href="https://marketplace.visualstudio.com/items?itemName=driftpulse.driftpulse"
     target="_blank"
     rel="noopener noreferrer"
     className="button-primary"
