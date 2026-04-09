@@ -88,9 +88,10 @@ button, input {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
   gap: 20px;
-  padding: 10px 14px 10px 14px;
-  border: 1px solid var(--border);
+  padding: 12px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(2, 5, 10, 0.8);
   backdrop-filter: blur(20px);
   border-radius: 14px;
@@ -135,8 +136,11 @@ button, input {
   display: flex;
   align-items: center;
   gap: 28px;
-  font-size: 13.5px;
-  color: rgba(255,255,255,0.5);
+  font-size: 15px;
+  color: rgba(255,255,255,0.6);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .nav-links a:hover {
