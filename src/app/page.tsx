@@ -101,13 +101,18 @@ export default function Home() {
             </p>
 
             <div className="hero-actions">
-              <a href="#beta" className="button-primary">
-                Join the beta
-              </a>
-              <a href="#product" className="button-secondary">
-                See product
-              </a>
-            </div>
+  
+    href="https://marketplace.visualstudio.com/items?itemName=driftpulse.driftpulse"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="button-primary"
+  >
+    Install free on VS Code
+  </a>
+  <a href="#beta" className="button-secondary">
+    Join the waitlist
+  </a>
+</div>
 
             <div className="hero-tags">
               <span>VS Code</span>
