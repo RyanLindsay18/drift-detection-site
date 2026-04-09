@@ -3,7 +3,7 @@ export default function SiteHeader() {
     <header className="site-header">
       <div className="container nav-container">
         <div className="nav-shell">
-          <a href="#" className="brand">
+          <a href="/" className="brand">
             <div className="brand-mark">DP</div>
             <div className="brand-copy">
               <div className="brand-title">Driftpulse</div>
@@ -14,9 +14,10 @@ export default function SiteHeader() {
             <a href="#problem">Problem</a>
             <a href="#how-it-works">How it works</a>
             <a href="#beta">Beta</a>
+            <a href="/dashboard">Dashboard</a>
           </nav>
-          <a href="#beta" className="nav-cta">
-            Get beta access
+          <a href="/auth" className="nav-cta">
+            Sign in
           </a>
         </div>
       </div>
