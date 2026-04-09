@@ -271,22 +271,21 @@ export default function Home() {
         <div className="container">
           <div className="beta-layout">
             <div>
-              <div className="eyebrow">Beta access</div>
-              <h2 className="mt-5 text-3xl font-semibold tracking-tight text-white md:text-5xl">
-                Get early access and help shape where this goes next.
-              </h2>
-              <p className="mt-5 max-w-xl text-base leading-7 text-white/65 md:text-lg">
-                The extension MVP is already working. The next step is getting
-                it into real repos, learning where the signal is strongest, and
-                then building the SaaS layer around history, workflows, and
-                alerts.
-              </p>
+              <div className="eyebrow">Stay in the loop</div>
+<h2 className="mt-5 text-3xl font-semibold tracking-tight text-white md:text-5xl">
+  The extension is free. Be first when the SaaS launches.
+</h2>
+<p className="mt-5 max-w-xl text-base leading-7 text-white/65 md:text-lg">
+  Install the extension now for free. Drop your email to get
+  notified when drift history, team dashboards, and alerts launch
+  — and to directly shape what gets built.
+</p>
 
-              <div className="beta-points">
-                <div>• Extension-first MVP, works today</div>
-                <div>• Background monitoring built in</div>
-                <div>• Future SaaS layer: history, teams, alerts, billing</div>
-              </div>
+<div className="beta-points">
+  <div>• Extension free forever for solo devs</div>
+  <div>• Early list gets first access to SaaS features</div>
+  <div>• Your feedback shapes the roadmap</div>
+</div>
             </div>
 
             <WaitlistForm />
@@ -297,10 +296,10 @@ export default function Home() {
       <section className="section section-border">
         <div className="container">
           <SectionHeader
-            eyebrow="FAQ"
-            title="A few quick answers."
-            description="Clear enough to build trust now without overloading the page."
-          />
+  eyebrow="FAQ"
+  title="A few quick answers."
+  description="Everything you need to know before installing."
+/>
 
           <div className="space-y-4">
             {faqs.map((item) => (

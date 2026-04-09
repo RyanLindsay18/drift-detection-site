@@ -44,10 +44,11 @@ export default function WaitlistForm() {
   return (
     <div className="waitlist-card">
       <div className="waitlist-header">
-        <h3 className="waitlist-title">Get beta access</h3>
-        <p className="waitlist-subtitle">
-          Join the early list for the VS Code extension and future SaaS tools.
-        </p>
+        <h3 className="waitlist-title">Get notified when SaaS launches</h3>
+<p className="waitlist-subtitle">
+  The extension is free to install now. Enter your email to get early 
+  access to drift history, dashboards, and team features when they launch.
+</p>
       </div>
 
       <form onSubmit={handleSubmit} className="waitlist-form">
