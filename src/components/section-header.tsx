@@ -10,12 +10,12 @@ export default function SectionHeader({
   description,
 }: SectionHeaderProps) {
   return (
-    <div className="mb-12 max-w-3xl">
+    <div className="mb-12 max-w-2xl">
       <div className="eyebrow">{eyebrow}</div>
-      <h2 className="mt-5 text-3xl font-semibold tracking-tight text-white md:text-5xl">
+      <h2 className="mt-4 text-3xl font-bold tracking-tight text-white md:text-4xl" style={{letterSpacing: '-0.04em'}}>
         {title}
       </h2>
-      <p className="mt-5 text-base leading-7 text-white/65 md:text-lg">
+      <p className="mt-4 text-base leading-7 text-white/50 md:text-lg">
         {description}
       </p>
     </div>
