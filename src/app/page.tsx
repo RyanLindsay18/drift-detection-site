@@ -33,25 +33,25 @@ const steps = [
     number: "01",
     title: "Install the extension",
     description:
-      "Add Driftpulse to VS Code and set your API key once. No config files, no setup overhead.",
+      "Search 'Driftpulse' in the VS Code Extensions marketplace and click Install. Or click the Install button above.",
   },
   {
     number: "02",
-    title: "Analyze the repo",
+    title: "Set your OpenAI API key",
     description:
-      "Driftpulse scans the codebase, prioritizes important files, and runs structured drift analysis.",
+      "Press Cmd+Shift+P, type 'Driftpulse: Set OpenAI API Key', and paste your key. Get one free at platform.openai.com.",
   },
   {
     number: "03",
-    title: "Review useful issues",
+    title: "Analyze your repo",
     description:
-      "See drift summaries, top issues, and next actions in a clean results panel inside the editor.",
+      "Open any project folder, press Cmd+Shift+P, and run 'Driftpulse: Analyze Current Repo'. Results appear in 30-60 seconds.",
   },
   {
     number: "04",
-    title: "Keep it monitored",
+    title: "Review and monitor",
     description:
-      "Background monitoring re-runs analysis after meaningful file changes so drift surfaces early — not six weeks later.",
+      "See your drift score, top issues, and next actions. Background monitoring re-runs automatically when files change.",
   },
 ];
 
@@ -266,6 +266,40 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <section className="section section-border">
+  <div className="container">
+    <SectionHeader
+      eyebrow="Setup"
+      title="Running in under 2 minutes."
+      description="No config files. No account required to start. Just install, add your API key, and run."
+    />
+
+    <div className="setup-steps">
+      <div className="setup-step">
+        <div className="setup-number">1</div>
+        <div className="setup-content">
+          <div className="setup-title">Install Driftpulse from the VS Code marketplace</div>
+          <div className="setup-desc">Search "Driftpulse" in Extensions or click the install button at the top of this page.</div>
+        </div>
+      </div>
+      <div className="setup-step">
+        <div className="setup-number">2</div>
+        <div className="setup-content">
+          <div className="setup-title">Press Cmd+Shift+P and run "Driftpulse: Set OpenAI API Key"</div>
+          <div className="setup-desc">Get a free API key at platform.openai.com. It's stored securely and never shared.</div>
+        </div>
+      </div>
+      <div className="setup-step">
+        <div className="setup-number">3</div>
+        <div className="setup-content">
+          <div className="setup-title">Open a project folder and run "Driftpulse: Analyze Current Repo"</div>
+          <div className="setup-desc">Results appear in 30-60 seconds. Drift score, issues, and next actions.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
       <section id="beta" className="section section-border">
         <div className="container">
