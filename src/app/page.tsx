@@ -1,7 +1,6 @@
 import SectionHeader from "@/components/section-header";
 import SiteFooter from "@/components/site-footer";
 import SiteHeader from "@/components/site-header";
-import WaitlistForm from "@/components/waitlist-form";
 
 const driftSignals = [
   {
@@ -57,24 +56,20 @@ const steps = [
 
 const faqs = [
   {
-    question: "Is this already a full SaaS product?",
-    answer:
-      "Not yet. The current MVP is extension-first inside VS Code. The longer-term direction includes history, team workflows, alerts, dashboards, and billing.",
+    question: "Do I need an account to use it?",
+    answer: "No. Install the extension, add your OpenAI API key, and start analyzing immediately. Sign up only if you want hosted analyses, history, and Pro features.",
   },
   {
-    question: "Who is it for right now?",
-    answer:
-      "Solo devs, indie hackers, and small fast-moving teams using AI heavily and shipping quickly.",
+    question: "Who is it for?",
+    answer: "Solo devs, indie hackers, and small fast-moving teams using AI heavily and shipping quickly.",
   },
   {
     question: "What kind of drift does it detect?",
-    answer:
-      "Code drift, architecture drift, config drift, and docs drift — especially the quiet mismatches that compound over time.",
+    answer: "Code drift, architecture drift, config drift, and docs drift — especially the quiet mismatches that compound over time.",
   },
   {
-    question: "Why join early?",
-    answer:
-      "Early users will directly shape the workflows, reports, and future SaaS direction around this product.",
+    question: "What does Pro give me?",
+    answer: "100 analyses/month using our hosted API (no OpenAI key needed), full analysis history, and priority support for $12/month.",
   },
 ];
 
@@ -109,8 +104,8 @@ export default function Home() {
   >
     Install free on VS Code
   </a>
-  <a href="#beta" className="button-secondary">
-    Join the waitlist
+ <a href="/pricing" className="button-secondary">
+    View pricing
   </a>
 </div>
 
@@ -301,28 +296,31 @@ export default function Home() {
   </div>
 </section>
 
-      <section id="beta" className="section section-border">
+      <section className="section section-border">
         <div className="container">
           <div className="beta-layout">
             <div>
-              <div className="eyebrow">Stay in the loop</div>
-<h2 className="mt-5 text-3xl font-semibold tracking-tight text-white md:text-5xl">
-  The extension is free. Be first when the SaaS launches.
-</h2>
-<p className="mt-5 max-w-xl text-base leading-7 text-white/65 md:text-lg">
-  Install the extension now for free. Drop your email to get
-  notified when drift history, team dashboards, and alerts launch
-  — and to directly shape what gets built.
-</p>
-
-<div className="beta-points">
-  <div>• Extension free forever for solo devs</div>
-  <div>• Early list gets first access to SaaS features</div>
-  <div>• Your feedback shapes the roadmap</div>
-</div>
+              <div className="eyebrow">Pricing</div>
+              <h2 className="mt-5 text-3xl font-semibold tracking-tight text-white md:text-5xl">
+                Free to start. Upgrade when you need more.
+              </h2>
+              <p className="mt-5 max-w-xl text-base leading-7 text-white/65 md:text-lg">
+                Install the extension free and analyze with your own OpenAI key. Upgrade to Pro for hosted analyses, full history, and no key required.
+              </p>
+              <div className="beta-points">
+                <div>• Free — 10 analyses/month, BYO API key</div>
+                <div>• Pro — $12/month, 100 analyses, hosted API, full history</div>
+                <div>• Team — $49/month, 500 analyses, priority support</div>
+              </div>
             </div>
-
-            <WaitlistForm />
+            <div style={{ display: "flex", flexDirection: "column", gap: "16px", justifyContent: "center" }}>
+              <a href="https://marketplace.visualstudio.com/items?itemName=driftpulse.driftpulse" target="_blank" rel="noopener noreferrer" className="button-primary">
+                Install free on VS Code
+              </a>
+              <a href="/pricing" className="button-secondary">
+                View pricing
+              </a>
+            </div>
           </div>
         </div>
       </section>
