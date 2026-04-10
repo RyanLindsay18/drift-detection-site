@@ -16,12 +16,13 @@ const plans = [
     features: [
       "10 analyses/month",
       "BYO OpenAI API key",
-      "Code, config & docs drift",
+      "Code, config & docs drift detection",
       "VS Code extension",
     ],
+    coming: [],
     cta: "Install Extension",
-    ctaHref:
-      "https://marketplace.visualstudio.com/items?itemName=driftpulse.driftpulse",
+    ctaHref: "https://marketplace.visualstudio.com/items?itemName=driftpulse.driftpulse",
+    plan: null,
     highlight: false,
   },
   {
@@ -31,13 +32,13 @@ const plans = [
     description: "For indie hackers shipping fast.",
     features: [
       "100 analyses/month",
-      "Hosted OpenAI — no key needed",
-      "90-day analysis history",
-      "Email drift alerts",
+      "Hosted API — no OpenAI key needed",
+      "Full analysis history",
       "Priority support",
     ],
+    coming: ["Email drift alerts"],
     cta: "Upgrade to Pro",
-    ctaHref: "/api/stripe/checkout",
+    ctaHref: null,
     plan: "pro",
     highlight: true,
   },
@@ -45,17 +46,16 @@ const plans = [
     name: "Team",
     price: "$49",
     period: "per month",
-    description: "For small teams using AI-heavy workflows.",
+    description: "For small teams moving fast.",
     features: [
       "500 analyses/month",
-      "Up to 5 repos",
-      "Team dashboard",
-      "Slack drift alerts",
-      "90-day history",
+      "Hosted API — no OpenAI key needed",
+      "Full analysis history",
       "Priority support",
     ],
+    coming: ["Slack drift alerts", "Team dashboard", "Multi-repo tracking"],
     cta: "Upgrade to Team",
-    ctaHref: "/api/stripe/checkout",
+    ctaHref: null,
     plan: "team",
     highlight: false,
   },
@@ -89,17 +89,14 @@ export default function PricingPage() {
                     Most Popular
                   </div>
                 )}
+
                 <div>
                   <h2 className="text-2xl font-bold">{plan.name}</h2>
                   <div className="mt-2 flex items-end gap-1">
                     <span className="text-4xl font-bold">{plan.price}</span>
-                    <span className="text-muted-foreground mb-1">
-                      /{plan.period}
-                    </span>
+                    <span className="text-muted-foreground mb-1">/{plan.period}</span>
                   </div>
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    {plan.description}
-                  </p>
+                  <p className="mt-2 text-sm text-muted-foreground">{plan.description}</p>
                 </div>
 
                 <ul className="flex flex-col gap-3 flex-1">
@@ -109,18 +106,31 @@ export default function PricingPage() {
                       {feature}
                     </li>
                   ))}
+                  {plan.coming.map((feature) => (
+                    <li key={feature} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <span className="mt-0.5">○</span>
+                      <span>
+                        {feature}{" "}
+                        <span className="text-xs border border-border rounded px-1 py-0.5 ml-1">
+                          coming soon
+                        </span>
+                      </span>
+                    </li>
+                  ))}
                 </ul>
 
                 {plan.plan ? (
-                  <CheckoutButton plan={plan.plan} label={plan.cta} highlight={plan.highlight} />
+                  <CheckoutButton
+                    plan={plan.plan}
+                    label={plan.cta}
+                    highlight={plan.highlight}
+                  />
                 ) : (
                   <Link
-                    href={plan.ctaHref}
-                    className={`text-center py-2.5 px-4 rounded-lg font-medium text-sm transition-colors ${
-                      plan.highlight
-                        ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                        : "border border-border hover:bg-accent"
-                    }`}
+                    href={plan.ctaHref!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-center py-2.5 px-4 rounded-lg font-medium text-sm transition-colors border border-border hover:bg-accent"
                   >
                     {plan.cta}
                   </Link>
