@@ -6,6 +6,7 @@ export async function GET(request: NextRequest) {
   const code = requestUrl.searchParams.get('code')
   const token_hash = requestUrl.searchParams.get('token_hash')
   const type = requestUrl.searchParams.get('type')
+  const next = requestUrl.searchParams.get('next') ?? '/dashboard'
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -16,9 +17,14 @@ export async function GET(request: NextRequest) {
     const { data, error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error && data.session) {
       const token = data.session.access_token
-      return NextResponse.redirect(
-        `vscode://driftpulse.driftpulse/auth/callback?token=${token}`
-      )
+      // If coming from VS Code, redirect back to extension
+      if (next.startsWith('vscode://')) {
+        return NextResponse.redirect(
+          `vscode://driftpulse.driftpulse/auth/callback?token=${token}`
+        )
+      }
+      // Otherwise go to dashboard
+      return NextResponse.redirect(new URL('/dashboard', request.url))
     }
   }
 
@@ -26,9 +32,14 @@ export async function GET(request: NextRequest) {
     const { data, error } = await supabase.auth.verifyOtp({ token_hash, type: type as 'email' })
     if (!error && data.session) {
       const token = data.session.access_token
-      return NextResponse.redirect(
-        `vscode://driftpulse.driftpulse/auth/callback?token=${token}`
-      )
+      // If coming from VS Code, redirect back to extension
+      if (next.startsWith('vscode://')) {
+        return NextResponse.redirect(
+          `vscode://driftpulse.driftpulse/auth/callback?token=${token}`
+        )
+      }
+      // Otherwise go to dashboard
+      return NextResponse.redirect(new URL('/dashboard', request.url))
     }
   }
 
