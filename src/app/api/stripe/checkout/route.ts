@@ -51,8 +51,8 @@ export async function POST(req: NextRequest) {
             product_data: {
               name: `Driftpulse ${selectedPlan.name}`,
               description: plan === "pro"
-                ? "100 analyses/month, 90-day history, email alerts"
-                : "500 analyses/month, 5 repos, team dashboard, Slack alerts",
+  ? "100 analyses/month, hosted API, full history"
+  : "500 analyses/month, hosted API, full history, priority support",
             },
             recurring: { interval: selectedPlan.interval },
             unit_amount: selectedPlan.amount,
