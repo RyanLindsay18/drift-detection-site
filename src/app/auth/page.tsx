@@ -1,96 +1,144 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 
 export default function AuthPage() {
+  const router = useRouter();
+  const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
-  const [sent, setSent] = useState(false);
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [checking, setChecking] = useState(true);
-  const router = useRouter();
+  const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        router.push("/dashboard");
-      } else {
-        setChecking(false);
-      }
-    });
-  }, [router]);
-
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleEmailAuth(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     setError("");
+    setMessage("");
 
-    const { error } = await supabase.auth.signInWithOtp({
-      email: email.trim(),
-      options: {
-        emailRedirectTo: "https://driftpulse.dev/auth/callback",
-      },
-    });
-
-    if (error) {
-      setError(error.message);
-      setLoading(false);
-      return;
+    if (mode === "signup") {
+      const { error } = await supabase.auth.signUp({ email, password });
+      if (error) {
+        setError(error.message);
+      } else {
+        setMessage("Account created! Check your email to confirm, or sign in now.");
+      }
+    } else {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        setError(error.message);
+      } else {
+        router.push("/dashboard");
+      }
     }
-
-    setSent(true);
     setLoading(false);
   }
 
-  if (checking) {
-    return (
-      <main style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#02050a", color: "white" }}>
-        Loading...
-      </main>
-    );
+  async function handleGoogle() {
+    setLoading(true);
+    setError("");
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: "https://driftpulse.dev/auth/callback",
+      },
+    });
+    if (error) {
+      setError(error.message);
+      setLoading(false);
+    }
   }
 
   return (
     <main style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#02050a", padding: "24px" }}>
       <div style={{ width: "100%", maxWidth: "420px", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "20px", padding: "40px", background: "rgba(255,255,255,0.03)" }}>
-        <div style={{ fontSize: "24px", fontWeight: "700", color: "white", letterSpacing: "-0.03em", marginBottom: "8px" }}>
-          Sign in to Driftpulse
+        
+        {/* Logo */}
+        <div style={{ fontSize: "24px", fontWeight: "700", color: "white", letterSpacing: "-0.03em", marginBottom: "4px" }}>
+          Driftpulse
         </div>
-        <div style={{ fontSize: "14px", color: "rgba(255,255,255,0.45)", marginBottom: "32px" }}>
-          We'll send you a magic link to sign in. No password needed.
+        <div style={{ fontSize: "14px", color: "rgba(255,255,255,0.4)", marginBottom: "32px" }}>
+          {mode === "signin" ? "Sign in to your account" : "Create your account"}
         </div>
 
-        {sent ? (
-          <div style={{ padding: "20px", borderRadius: "12px", background: "rgba(52,211,153,0.08)", border: "1px solid rgba(52,211,153,0.2)", color: "#6ee7b7", fontSize: "14px", lineHeight: "1.6" }}>
-            Check your email — we sent a magic link to <strong>{email}</strong>. Click it to sign in. You can close this tab.
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit}>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
-              required
-              style={{ width: "100%", padding: "14px 16px", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.05)", color: "white", fontSize: "15px", outline: "none", marginBottom: "12px", boxSizing: "border-box" }}
-            />
-            <button
-              type="submit"
-              disabled={loading}
-              style={{ width: "100%", padding: "14px", borderRadius: "12px", background: "white", color: "#02050a", fontSize: "15px", fontWeight: "600", border: "none", cursor: loading ? "not-allowed" : "pointer", opacity: loading ? 0.6 : 1 }}
-            >
-              {loading ? "Sending..." : "Send magic link"}
-            </button>
+        {/* Google button */}
+        <button
+          onClick={handleGoogle}
+          disabled={loading}
+          style={{ width: "100%", padding: "12px", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.05)", color: "white", fontSize: "15px", fontWeight: "500", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "10px", marginBottom: "24px" }}
+        >
+          <svg width="18" height="18" viewBox="0 0 18 18">
+            <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/>
+            <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/>
+            <path fill="#FBBC05" d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957C.347 6.175 0 7.55 0 9s.348 2.825.957 4.039l3.007-2.332z"/>
+            <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z"/>
+          </svg>
+          Continue with Google
+        </button>
 
-            {error && (
-              <div style={{ marginTop: "12px", color: "#fca5a5", fontSize: "14px" }}>
-                {error}
-              </div>
-            )}
-          </form>
+        {/* Divider */}
+        <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "24px" }}>
+          <div style={{ flex: 1, height: "1px", background: "rgba(255,255,255,0.08)" }} />
+          <span style={{ fontSize: "13px", color: "rgba(255,255,255,0.3)" }}>or</span>
+          <div style={{ flex: 1, height: "1px", background: "rgba(255,255,255,0.08)" }} />
+        </div>
+
+        {/* Email/password form */}
+        <form onSubmit={handleEmailAuth} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="you@example.com"
+            required
+            style={{ width: "100%", padding: "12px 16px", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.05)", color: "white", fontSize: "15px", outline: "none", boxSizing: "border-box" }}
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            required
+            style={{ width: "100%", padding: "12px 16px", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.05)", color: "white", fontSize: "15px", outline: "none", boxSizing: "border-box" }}
+          />
+          <button
+            type="submit"
+            disabled={loading}
+            style={{ width: "100%", padding: "12px", borderRadius: "12px", background: "white", color: "#02050a", fontSize: "15px", fontWeight: "600", border: "none", cursor: loading ? "not-allowed" : "pointer", opacity: loading ? 0.6 : 1 }}
+          >
+            {loading ? "..." : mode === "signin" ? "Sign in" : "Create account"}
+          </button>
+        </form>
+
+        {error && (
+          <div style={{ marginTop: "12px", color: "#fca5a5", fontSize: "14px" }}>{error}</div>
         )}
+        {message && (
+          <div style={{ marginTop: "12px", color: "#6ee7b7", fontSize: "14px" }}>{message}</div>
+        )}
+
+        {/* Toggle */}
+        <div style={{ marginTop: "24px", textAlign: "center", fontSize: "14px", color: "rgba(255,255,255,0.4)" }}>
+          {mode === "signin" ? (
+            <>
+              No account?{" "}
+              <button onClick={() => { setMode("signup"); setError(""); setMessage(""); }} style={{ background: "none", border: "none", color: "white", cursor: "pointer", fontSize: "14px", textDecoration: "underline" }}>
+                Create one
+              </button>
+            </>
+          ) : (
+            <>
+              Already have an account?{" "}
+              <button onClick={() => { setMode("signin"); setError(""); setMessage(""); }} style={{ background: "none", border: "none", color: "white", cursor: "pointer", fontSize: "14px", textDecoration: "underline" }}>
+                Sign in
+              </button>
+            </>
+          )}
+        </div>
+
       </div>
     </main>
   );
