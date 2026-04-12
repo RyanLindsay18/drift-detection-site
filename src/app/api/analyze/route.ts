@@ -97,11 +97,11 @@ export async function POST(request: NextRequest) {
 
   let resultText: string
   try {
-    const response = await client.responses.create({
-      model: 'gpt-4o-mini',
-      input: body.prompt
-    })
-    resultText = response.output_text || ''
+    const response = await client.chat.completions.create({
+  model: 'gpt-4o-mini',
+  messages: [{ role: 'user', content: body.prompt }]
+})
+resultText = response.choices[0]?.message?.content || ''
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err)
     console.error('[analyze] OpenAI error:', message)
