@@ -36,10 +36,10 @@ const steps = [
   },
   {
     number: "02",
-    title: "Set your OpenAI API key",
+    title: "Sign in or add your API key",
     description:
-      "Press Cmd+Shift+P, type 'Driftpulse: Set OpenAI API Key', and paste your key. Get one free at platform.openai.com.",
-  },
+      "Sign in at driftpulse.dev for hosted analysis — no API key needed. Or press Cmd+Shift+P, run 'Driftpulse: Set OpenAI API Key', and use your own key.",
+},
   {
     number: "03",
     title: "Analyze your repo",
@@ -281,8 +281,8 @@ export default function Home() {
       <div className="setup-step">
         <div className="setup-number">2</div>
         <div className="setup-content">
-          <div className="setup-title">Press Cmd+Shift+P and run "Driftpulse: Set OpenAI API Key"</div>
-          <div className="setup-desc">Get a free API key at platform.openai.com. It's stored securely and never shared.</div>
+          <div className="setup-title">Sign in or add your OpenAI API key</div>
+<div className="setup-desc">Sign in at driftpulse.dev for hosted analysis with no key required. Or run "Driftpulse: Set OpenAI API Key" to use your own.</div>
         </div>
       </div>
       <div className="setup-step">
