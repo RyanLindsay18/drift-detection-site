@@ -146,7 +146,7 @@ useEffect(() => {
         {/* Header */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "40px" }}>
           <div>
-            <div style={{ fontSize: "24px", fontWeight: "700", letterSpacing: "-0.03em" }}>Driftpulse</div>
+            <a href="/" style={{ fontSize: "24px", fontWeight: "700", letterSpacing: "-0.03em", color: "white", textDecoration: "none" }}>Driftpulse</a>
             <div style={{ fontSize: "14px", color: "rgba(255,255,255,0.45)", marginTop: "4px" }}>
               {profile?.email} —{" "}
               <span style={{ color: profile?.tier === "free" ? "rgba(255,255,255,0.45)" : "#34d399", textTransform: "capitalize" }}>
@@ -170,11 +170,11 @@ useEffect(() => {
   </div>
   <button
     onClick={async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        window.location.href = `vscode://driftpulse.driftpulse/auth/callback?token=${session.access_token}`;
-      }
-    }}
+  const { data: { session } } = await supabase.auth.refreshSession();
+  if (session) {
+    window.location.href = `vscode://driftpulse.driftpulse/auth/callback?token=${session.access_token}`;
+  }
+}}
     style={{ padding: "10px 20px", borderRadius: "10px", background: "var(--cyan, #7dd3fc)", color: "#02050a", fontSize: "13px", fontWeight: "600", border: "none", cursor: "pointer", whiteSpace: "nowrap" }}
   >
     Connect VS Code
@@ -266,6 +266,10 @@ useEffect(() => {
           </div>
         )}
       </div>
+      <div style={{ marginTop: "48px", paddingTop: "24px", borderTop: "1px solid rgba(255,255,255,0.06)", display: "flex", gap: "24px", justifyContent: "center" }}>
+  <a href="/privacy" style={{ fontSize: "12px", color: "rgba(255,255,255,0.3)", textDecoration: "none" }}>Privacy policy</a>
+  <a href="/terms" style={{ fontSize: "12px", color: "rgba(255,255,255,0.3)", textDecoration: "none" }}>Terms of service</a>
+</div>
     </main>
   );
 }
