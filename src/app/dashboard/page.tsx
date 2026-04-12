@@ -47,45 +47,50 @@ export default function DashboardPage() {
   const [runs, setRuns] = useState<AnalysisRun[]>([]);
   const [loading, setLoading] = useState(true);
   const [checkingOut, setCheckingOut] = useState(false);
+useEffect(() => {
+  async function load() {
+    const { data: { session } } = await supabase.auth.getSession();
 
-  useEffect(() => {
-    async function load() {
-      const { data: { session } } = await supabase.auth.getSession();
-
-      if (!session) {
-        router.push("/auth");
-        return;
-      }
-
-      // Handle checkout redirect from pricing page
-      const params = new URLSearchParams(window.location.search);
-      const checkoutPlan = params.get("checkout");
-      if (checkoutPlan && (checkoutPlan === "pro" || checkoutPlan === "team")) {
-        await startCheckout(session.access_token, checkoutPlan);
-        return;
-      }
-
-      const { data: profileData } = await supabase
-        .from("users")
-        .select("*")
-        .eq("id", session.user.id)
-        .single();
-
-      const { data: runsData } = await supabase
-        .from("analysis_runs")
-        .select("*")
-        .eq("user_id", session.user.id)
-        .order("created_at", { ascending: false })
-        .limit(20);
-
-      setProfile(profileData);
-      setRuns(runsData || []);
-      setLoading(false);
+    if (!session) {
+      router.push("/auth");
+      return;
     }
 
-    load();
-  }, [router]);
+    // Check if VS Code connection is requested
+    const params = new URLSearchParams(window.location.search);
+    const connectVscode = params.get("connect_vscode");
+    if (connectVscode === "true") {
+      window.location.href = `vscode://driftpulse.driftpulse/auth/callback?token=${session.access_token}`;
+      return;
+    }
 
+    // Handle checkout redirect from pricing page
+    const checkoutPlan = params.get("checkout");
+    if (checkoutPlan && (checkoutPlan === "pro" || checkoutPlan === "team")) {
+      await startCheckout(session.access_token, checkoutPlan);
+      return;
+    }
+
+    const { data: profileData } = await supabase
+      .from("users")
+      .select("*")
+      .eq("id", session.user.id)
+      .single();
+
+    const { data: runsData } = await supabase
+      .from("analysis_runs")
+      .select("*")
+      .eq("user_id", session.user.id)
+      .order("created_at", { ascending: false })
+      .limit(20);
+
+    setProfile(profileData);
+    setRuns(runsData || []);
+    setLoading(false);
+  }
+
+  load();
+}, [router]);
   async function startCheckout(token: string, plan: string) {
     setCheckingOut(true);
     try {
@@ -156,6 +161,25 @@ export default function DashboardPage() {
             Sign out
           </button>
         </div>
+
+{/* Connect VS Code button */}
+<div style={{ marginBottom: "32px", padding: "20px 24px", borderRadius: "14px", border: "1px solid rgba(125,211,252,0.2)", background: "rgba(125,211,252,0.03)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+  <div>
+    <div style={{ fontSize: "15px", fontWeight: "600", color: "white", marginBottom: "4px" }}>Connect VS Code</div>
+    <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.5)" }}>Link your editor to sync analyses to this dashboard</div>
+  </div>
+  <button
+    onClick={async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        window.location.href = `vscode://driftpulse.driftpulse/auth/callback?token=${session.access_token}`;
+      }
+    }}
+    style={{ padding: "10px 20px", borderRadius: "10px", background: "var(--cyan, #7dd3fc)", color: "#02050a", fontSize: "13px", fontWeight: "600", border: "none", cursor: "pointer", whiteSpace: "nowrap" }}
+  >
+    Connect VS Code
+  </button>
+</div>
 
         {/* Stats */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px", marginBottom: "40px" }}>
@@ -231,7 +255,7 @@ export default function DashboardPage() {
           <div style={{ marginTop: "32px", padding: "24px", borderRadius: "16px", border: "1px solid rgba(125,211,252,0.2)", background: "rgba(125,211,252,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "16px" }}>
             <div>
               <div style={{ fontSize: "15px", fontWeight: "600", color: "white", marginBottom: "4px" }}>Upgrade to Pro</div>
-              <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.5)" }}>100 analyses/month, 90-day history, email alerts — $12/month</div>
+              <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.5)" }}>100 analyses/month, hosted API, full history — $12/month</div>
             </div>
             <button
               onClick={() => handleUpgrade("pro")}
