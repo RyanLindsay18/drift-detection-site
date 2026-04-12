@@ -1,0 +1,32 @@
+import fs from 'fs';
+
+const svg = `<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#02050a"/>
+  <line x1="0" y1="210" x2="1200" y2="210" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1"/>
+  <line x1="0" y1="420" x2="1200" y2="420" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1"/>
+  <line x1="400" y1="0" x2="400" y2="630" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1"/>
+  <line x1="800" y1="0" x2="800" y2="630" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1"/>
+  <ellipse cx="120" cy="120" rx="180" ry="120" fill="#38bdf8" fill-opacity="0.06"/>
+  <rect x="100" y="220" width="80" height="80" rx="16" fill="#38bdf8"/>
+  <text x="140" y="275" font-family="system-ui, sans-serif" font-size="42" font-weight="700" fill="#02050a" text-anchor="middle">DP</text>
+  <text x="204" y="275" font-family="system-ui, sans-serif" font-size="52" font-weight="700" fill="#ffffff" text-anchor="start">Driftpulse</text>
+  <text x="100" y="345" font-family="system-ui, sans-serif" font-size="28" font-weight="400" fill="rgba(255,255,255,0.55)" text-anchor="start">Catch repo drift before it compounds.</text>
+  <rect x="100" y="390" width="168" height="38" rx="19" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="184" y="414" font-family="system-ui, sans-serif" font-size="16" fill="#7dd3fc" text-anchor="middle">Code drift</text>
+  <rect x="284" y="390" width="210" height="38" rx="19" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="389" y="414" font-family="system-ui, sans-serif" font-size="16" fill="#7dd3fc" text-anchor="middle">Architecture drift</text>
+  <rect x="510" y="390" width="184" height="38" rx="19" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="602" y="414" font-family="system-ui, sans-serif" font-size="16" fill="#7dd3fc" text-anchor="middle">Config drift</text>
+  <rect x="710" y="390" width="170" height="38" rx="19" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="795" y="414" font-family="system-ui, sans-serif" font-size="16" fill="#7dd3fc" text-anchor="middle">Docs drift</text>
+  <text x="100" y="490" font-family="system-ui, sans-serif" font-size="20" fill="rgba(255,255,255,0.25)" text-anchor="start">driftpulse.dev</text>
+  <rect x="820" y="190" width="290" height="200" rx="16" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <text x="965" y="235" font-family="system-ui, sans-serif" font-size="14" fill="rgba(255,255,255,0.35)" text-anchor="middle">DRIFT SCORE</text>
+  <text x="965" y="305" font-family="system-ui, sans-serif" font-size="72" font-weight="700" fill="#38bdf8" text-anchor="middle">3</text>
+  <text x="965" y="340" font-family="system-ui, sans-serif" font-size="14" fill="rgba(255,255,255,0.25)" text-anchor="middle">/ 10</text>
+  <rect x="840" y="420" width="250" height="38" rx="8" fill="rgba(56,189,248,0.08)" stroke="rgba(56,189,248,0.2)" stroke-width="1"/>
+  <text x="965" y="444" font-family="system-ui, sans-serif" font-size="14" fill="rgba(255,255,255,0.45)" text-anchor="middle">Free VS Code Extension</text>
+</svg>`;
+
+fs.writeFileSync('public/og-image.svg', svg);
+console.log('SVG written to public/og-image.svg');
