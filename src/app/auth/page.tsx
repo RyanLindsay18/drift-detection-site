@@ -120,6 +120,33 @@ export default function AuthPage() {
           <div style={{ marginTop: "12px", color: "#6ee7b7", fontSize: "14px" }}>{message}</div>
         )}
 
+{/* Forgot password */}
+        {mode === "signin" && (
+          <div style={{ marginTop: "12px", textAlign: "right" }}>
+            <button
+              onClick={async () => {
+                if (!email) {
+                  setError("Enter your email above first.");
+                  return;
+                }
+                setLoading(true);
+                const { error } = await supabase.auth.resetPasswordForEmail(email, {
+                  redirectTo: "https://driftpulse.dev/auth/reset",
+                });
+                setLoading(false);
+                if (error) {
+                  setError(error.message);
+                } else {
+                  setMessage("Password reset email sent. Check your inbox.");
+                }
+              }}
+              style={{ background: "none", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer", fontSize: "13px", textDecoration: "underline" }}
+            >
+              Forgot password?
+            </button>
+          </div>
+        )}
+        
         {/* Toggle */}
         <div style={{ marginTop: "24px", textAlign: "center", fontSize: "14px", color: "rgba(255,255,255,0.4)" }}>
           {mode === "signin" ? (
