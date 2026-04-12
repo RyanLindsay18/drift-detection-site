@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
   }
 
   // Parse request body
-  let body: { prompt?: string; fileCount?: number; repoNameHash?: string }
+  let body: { prompt?: string; fileCount?: number; repoNameHash?: string; byoApiKey?: string }
   try {
     body = await request.json()
   } catch {
@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
   }
 
   // Call OpenAI with our key
-  const openaiKey = process.env.OPENAI_API_KEY
+  const openaiKey = body.byoApiKey || process.env.OPENAI_API_KEY
   if (!openaiKey) {
     console.error('[analyze] missing OPENAI_API_KEY')
     return NextResponse.json({ error: 'Server configuration error' }, { status: 500 })
@@ -118,9 +118,26 @@ export async function POST(request: NextRequest) {
   let analysis: Record<string, unknown>
   try {
     const cleaned = resultText.trim().replace(/^```json\n?/, '').replace(/\n?```$/, '')
-    analysis = JSON.parse(cleaned)
-  } catch {
-    return NextResponse.json({ error: 'Failed to parse analysis result' }, { status: 500 })
+    const parsed = JSON.parse(cleaned)
+    
+    // Validate required fields exist
+    if (typeof parsed !== 'object' || parsed === null) {
+      throw new Error('Response is not an object')
+    }
+    if (typeof parsed.driftScore !== 'number') {
+      throw new Error('Missing or invalid driftScore')
+    }
+    if (!Array.isArray(parsed.issues)) {
+      throw new Error('Missing or invalid issues array')
+    }
+    
+    analysis = parsed
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Unknown parse error'
+    console.error('[analyze] JSON parse error:', message)
+    return NextResponse.json({ 
+      error: 'Analysis returned an unexpected format. Please try again.' 
+    }, { status: 500 })
   }
 
   // Store the run in database
