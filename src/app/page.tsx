@@ -57,7 +57,7 @@ const steps = [
 const faqs = [
   {
     question: "Do I need an account to use it?",
-    answer: "No. Install the extension, add your OpenAI API key, and start analyzing immediately. Sign up only if you want hosted analyses, history, and Pro features.",
+    answer: "Yes — sign in takes 30 seconds and gives you 10 free analyses per month with no API key needed. Pro gives you 100 analyses and full history for $12/month.",
   },
   {
     question: "Who is it for?",
@@ -82,18 +82,16 @@ export default function Home() {
       <section className="hero-section">
         <div className="container">
           <div className="hero-wrap">
-            <div className="hero-badge">VS Code extension for repo drift</div>
+            <div className="hero-badge">The safety net for vibe coders</div>
 
             <h1 className="hero-title">
-              Catch <span className="gradient-text">repo drift</span> before
-              fast shipping turns into quiet chaos.
-            </h1>
+  Vibe coding ships fast.{" "}
+  <span className="gradient-text">It also ships security gaps.</span>
+</h1>
 
             <p className="hero-description">
-              Driftpulse scans your repo for code drift, architecture drift,
-              config drift, and docs drift — so AI-assisted shipping does not
-              quietly break structure over time.
-            </p>
+  Driftpulse scans your entire repo, flags security gaps, broken structure, and hidden time bombs — then gives you something you can paste straight into Cursor or Claude to fix them.
+</p>
 
             <div className="hero-actions">
   
@@ -110,11 +108,11 @@ export default function Home() {
 </div>
 
             <div className="hero-tags">
-              <span>VS Code</span>
-              <span>Structured analysis</span>
-              <span>Background monitoring</span>
-              <span>Built for fast-moving repos</span>
-            </div>
+  <span>VS Code</span>
+  <span>Security scanning</span>
+  <span>Copy to Cursor</span>
+  <span>Built for vibe coders</span>
+</div>
 
             <div id="product" className="hero-product-frame">
               <div className="hero-product-window">
@@ -267,7 +265,7 @@ export default function Home() {
     <SectionHeader
       eyebrow="Setup"
       title="Running in under 2 minutes."
-      description="No config files. No account required to start. Just install, add your API key, and run."
+      description="No config files. Sign in in 30 seconds, install the extension, and run your first analysis."
     />
 
     <div className="setup-steps">
