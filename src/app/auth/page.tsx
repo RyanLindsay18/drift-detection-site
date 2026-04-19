@@ -44,7 +44,7 @@ export default function AuthPage() {
         setError(error.message);
       } else if (connectVscode && data.session) {
         setMessage("Signed in! Returning to VS Code...");
-        window.location.href = `${VSCODE_CALLBACK_URI}?token=${data.session.access_token}`;
+        window.location.href = `${VSCODE_CALLBACK_URI}?token=${data.session.access_token}&refresh_token=${data.session.refresh_token}`;
       } else {
         router.push("/dashboard");
       }

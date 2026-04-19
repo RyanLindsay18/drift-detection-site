@@ -16,14 +16,12 @@ export async function GET(request: NextRequest) {
   if (code) {
     const { data, error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error && data.session) {
-      const token = data.session.access_token
-      // If coming from VS Code, redirect back to extension
+      const { access_token, refresh_token } = data.session
       if (next.startsWith('vscode://')) {
         return NextResponse.redirect(
-          `vscode://driftpulse.driftpulse/auth/callback?token=${token}`
+          `vscode://driftpulse.driftpulse/auth/callback?token=${access_token}&refresh_token=${refresh_token}`
         )
       }
-      // Otherwise go to dashboard
       return NextResponse.redirect(new URL('/dashboard', request.url))
     }
   }
@@ -31,14 +29,12 @@ export async function GET(request: NextRequest) {
   if (token_hash && type) {
     const { data, error } = await supabase.auth.verifyOtp({ token_hash, type: type as 'email' })
     if (!error && data.session) {
-      const token = data.session.access_token
-      // If coming from VS Code, redirect back to extension
+      const { access_token, refresh_token } = data.session
       if (next.startsWith('vscode://')) {
         return NextResponse.redirect(
-          `vscode://driftpulse.driftpulse/auth/callback?token=${token}`
+          `vscode://driftpulse.driftpulse/auth/callback?token=${access_token}&refresh_token=${refresh_token}`
         )
       }
-      // Otherwise go to dashboard
       return NextResponse.redirect(new URL('/dashboard', request.url))
     }
   }

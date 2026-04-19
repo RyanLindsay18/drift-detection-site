@@ -98,10 +98,11 @@ export async function POST(request: NextRequest) {
   let resultText: string
   try {
     const response = await client.chat.completions.create({
-  model: 'gpt-4o-mini',
-  messages: [{ role: 'user', content: body.prompt }]
-})
-resultText = response.choices[0]?.message?.content || ''
+      model: 'gpt-4o',
+      temperature: 0.2,
+      messages: [{ role: 'user', content: body.prompt }]
+    })
+    resultText = response.choices[0]?.message?.content || ''
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err)
     console.error('[analyze] OpenAI error:', message)
@@ -149,7 +150,7 @@ resultText = response.choices[0]?.message?.content || ''
     issue_count: Array.isArray(analysis.issues) ? analysis.issues.length : null,
     drift_summary: typeof analysis.driftSummary === 'string' ? analysis.driftSummary : null,
     next_actions: Array.isArray(analysis.nextActions) ? analysis.nextActions : null,
-    model: 'gpt-4o-mini',
+    model: 'gpt-4o',
     duration_ms: duration
   })
 
