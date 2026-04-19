@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
+
+const VSCODE_CALLBACK_URI = "vscode://driftpulse.driftpulse/auth/callback";
 
 export default function AuthPage() {
   const router = useRouter();
@@ -12,6 +14,12 @@ export default function AuthPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [connectVscode, setConnectVscode] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setConnectVscode(params.get("connect_vscode") === "true");
+  }, []);
 
   async function handleEmailAuth(e: React.FormEvent) {
     e.preventDefault();
@@ -24,12 +32,19 @@ export default function AuthPage() {
       if (error) {
         setError(error.message);
       } else {
-        setMessage("Account created! Check your email to confirm, or sign in now.");
+        setMessage(
+          connectVscode
+            ? "Account created! Check your email to confirm, then return here to sign in and connect VS Code."
+            : "Account created! Check your email to confirm, or sign in now."
+        );
       }
     } else {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) {
         setError(error.message);
+      } else if (connectVscode && data.session) {
+        setMessage("Signed in! Returning to VS Code...");
+        window.location.href = `${VSCODE_CALLBACK_URI}?token=${data.session.access_token}`;
       } else {
         router.push("/dashboard");
       }
@@ -43,7 +58,9 @@ export default function AuthPage() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "https://driftpulse.dev/auth/callback",
+        redirectTo: connectVscode
+          ? `https://driftpulse.dev/auth/callback?next=${encodeURIComponent(VSCODE_CALLBACK_URI)}`
+          : "https://driftpulse.dev/auth/callback",
       },
     });
     if (error) {
@@ -61,7 +78,9 @@ export default function AuthPage() {
           Driftpulse
         </div>
         <div style={{ fontSize: "14px", color: "rgba(255,255,255,0.4)", marginBottom: "32px" }}>
-          {mode === "signin" ? "Sign in to your account" : "Create your account"}
+          {connectVscode
+            ? "Sign in to connect the VS Code extension"
+            : mode === "signin" ? "Sign in to your account" : "Create your account"}
         </div>
 
         {/* Google button */}
