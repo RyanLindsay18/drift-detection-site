@@ -278,9 +278,18 @@ export default function Home() {
         <div className="container">
           <h2 className="section-headline">What developers say</h2>
           <div className="three-col testimonial-grid">
-            <div className="testimonial-placeholder">[TESTIMONIAL]</div>
-            <div className="testimonial-placeholder">[TESTIMONIAL]</div>
-            <div className="testimonial-placeholder">[TESTIMONIAL]</div>
+            <div className="testimonial-placeholder" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', textAlign: 'left', textTransform: 'none', letterSpacing: 'normal', fontSize: '14px', fontFamily: 'inherit' }}>
+              <p style={{ color: 'rgba(255,255,255,0.65)', lineHeight: '1.7', margin: '0 0 16px 0', fontStyle: 'italic' }}>&ldquo;This has found things I never would have thought of.&rdquo;</p>
+              <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)', fontFamily: 'monospace' }}>— Solo dev, vibe coding workflow</span>
+            </div>
+            <div className="testimonial-placeholder" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', textAlign: 'left', textTransform: 'none', letterSpacing: 'normal', fontSize: '14px', fontFamily: 'inherit' }}>
+              <p style={{ color: 'rgba(255,255,255,0.65)', lineHeight: '1.7', margin: '0 0 16px 0', fontStyle: 'italic' }}>&ldquo;I ran it on a side project I hadn&apos;t touched in months. Immediately flagged three things that would&apos;ve bit me when I came back to it.&rdquo;</p>
+              <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)', fontFamily: 'monospace' }}>— Indie dev, returning to a stale repo</span>
+            </div>
+            <div className="testimonial-placeholder" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', textAlign: 'left', textTransform: 'none', letterSpacing: 'normal', fontSize: '14px', fontFamily: 'inherit' }}>
+              <p style={{ color: 'rgba(255,255,255,0.65)', lineHeight: '1.7', margin: '0 0 16px 0', fontStyle: 'italic' }}>&ldquo;Caught a naming inconsistency between the API and the frontend that had been there for weeks. We just never noticed until it broke something.&rdquo;</p>
+              <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)', fontFamily: 'monospace' }}>— Full-stack dev, small team</span>
+            </div>
           </div>
         </div>
       </AnimateIn>
