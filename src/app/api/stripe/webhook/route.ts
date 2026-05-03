@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing metadata" }, { status: 400 });
     }
 
-    const tier = plan === "team" ? "team" : "pro";
+    const tier = "pro";
 
     const { error } = await supabase
       .from("users")

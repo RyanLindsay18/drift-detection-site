@@ -1,77 +1,16 @@
-import SectionHeader from "@/components/section-header";
-import SiteFooter from "@/components/site-footer";
+import type { Metadata } from "next";
 import SiteHeader from "@/components/site-header";
+import SiteFooter from "@/components/site-footer";
+import AnimateIn from "@/components/animate-in";
 
-const driftSignals = [
-  {
-    title: "Architecture drift",
-    description:
-      "New flows get added, original boundaries get blurred, and the repo quietly stops matching the intended structure.",
-  },
-  {
-    title: "Config drift",
-    description:
-      "Scripts, ignore rules, env setup, CI behavior, and repo conventions shift across files until reliability starts slipping.",
-  },
-  {
-    title: "Docs drift",
-    description:
-      "README, prompts, setup notes, and actual code behavior stop matching — even though the repo still looks fine on the surface.",
-  },
-];
+export const metadata: Metadata = {
+  title: "Driftpulse — Catch Code Drift Before It Catches You",
+  description:
+    "Driftpulse detects architecture, config, and docs drift in your repo. Built for vibe coders and AI-heavy workflows. Free scan on install.",
+};
 
-const audience = [
-  "Solo developers shipping quickly",
-  "Indie hackers building AI-heavy products",
-  "Small teams moving faster than process can keep up",
-  "Repos where AI accelerates entropy as much as output",
-];
-
-const steps = [
-  {
-    number: "01",
-    title: "Install the extension",
-    description:
-      "Search 'Driftpulse' in the VS Code Extensions marketplace and click Install. Or click the Install button above.",
-  },
-  {
-    number: "02",
-    title: "Sign in or add your API key",
-    description:
-      "Sign in at driftpulse.dev for hosted analysis — no API key needed. Or press Cmd+Shift+P, run 'Driftpulse: Set OpenAI API Key', and use your own key.",
-},
-  {
-    number: "03",
-    title: "Analyze your repo",
-    description:
-      "Open any project folder, press Cmd+Shift+P, and run 'Driftpulse: Analyze Current Repo'. Results appear in 30-60 seconds.",
-  },
-  {
-    number: "04",
-    title: "Review and monitor",
-    description:
-      "See your drift score, top issues, and next actions. Background monitoring re-runs automatically when files change.",
-  },
-];
-
-const faqs = [
-  {
-    question: "Do I need an account to use it?",
-    answer: "Yes — sign in takes 30 seconds and gives you 10 free analyses per month with no API key needed. Pro gives you 100 analyses and full history for $12/month.",
-  },
-  {
-    question: "Who is it for?",
-    answer: "Solo devs, indie hackers, and small fast-moving teams using AI heavily and shipping quickly.",
-  },
-  {
-    question: "What kind of drift does it detect?",
-    answer: "Code drift, architecture drift, config drift, and docs drift — especially the quiet mismatches that compound over time.",
-  },
-  {
-    question: "What does Pro give me?",
-    answer: "100 analyses/month using our hosted API (no OpenAI key needed), full analysis history, and priority support for $12/month.",
-  },
-];
+const MARKETPLACE_URL =
+  "https://marketplace.visualstudio.com/items?itemName=driftpulse.driftpulse";
 
 export default function Home() {
   return (
@@ -79,49 +18,47 @@ export default function Home() {
       <div className="hero-bg" />
       <SiteHeader />
 
+      {/* ── 1. HERO ── */}
       <section className="hero-section">
         <div className="container">
           <div className="hero-wrap">
-            <div className="hero-badge">The safety net for vibe coders</div>
-
             <h1 className="hero-title">
-  Vibe coding ships fast.{" "}
-  <span className="gradient-text">It also ships security gaps.</span>
-</h1>
+              Your AI writes the code.{" "}
+              Nobody&apos;s watching what it&apos;s doing to your architecture.
+            </h1>
 
             <p className="hero-description">
-  Driftpulse scans your entire repo, flags security gaps, broken structure, and hidden time bombs — then gives you something you can paste straight into Cursor or Claude to fix them.
-</p>
+              Driftpulse runs silently in VS Code and alerts you when your
+              codebase starts contradicting itself — before it becomes a
+              debugging nightmare.
+            </p>
 
             <div className="hero-actions">
-  
-<a    href="https://marketplace.visualstudio.com/items?itemName=driftpulse.driftpulse"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="button-primary"
-  >
-    Install free on VS Code
-  </a>
- <a href="/pricing" className="button-secondary">
-    View pricing
-  </a>
-</div>
+              <a
+                href={MARKETPLACE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="button-primary"
+              >
+                Install Free on VS Code
+              </a>
+              <a href="#sample-report" className="button-secondary">
+                See a Sample Report
+              </a>
+            </div>
 
-            <div className="hero-tags">
-  <span>VS Code</span>
-  <span>Security scanning</span>
-  <span>Copy to Cursor</span>
-  <span>Built for vibe coders</span>
-</div>
+            <div className="hero-trust">
+              Free scan on install.&nbsp;&nbsp;No API key needed.&nbsp;&nbsp;No
+              credit card.
+            </div>
 
-            <div id="product" className="hero-product-frame">
+            <div id="sample-report" className="hero-product-frame">
               <div className="hero-product-window">
                 <div className="hero-window-dots">
                   <span />
                   <span />
                   <span />
                 </div>
-
                 <div className="hero-product-inner">
                   <div className="product-top">
                     <div>
@@ -131,7 +68,6 @@ export default function Home() {
                         <span className="product-score">4/10</span>
                       </div>
                     </div>
-
                     <div className="product-status">
                       <span className="status-dot" />
                       Analysis complete
@@ -142,15 +78,14 @@ export default function Home() {
                     <div className="product-main-card">
                       <div className="product-section-label">Summary</div>
                       <p className="product-summary">
-                        Strong MVP foundation. Main drift risk sits in background
-                        monitoring flow, duplicated contracts, and documentation
-                        mismatches that can compound as features grow.
+                        Strong MVP foundation. Main drift risk sits in
+                        background monitoring flow, duplicated contracts, and
+                        documentation mismatches that can compound as features
+                        grow.
                       </p>
-
                       <div className="product-section-label second">
                         Top issues
                       </div>
-
                       <div className="issue-list">
                         <div className="issue-card">
                           Background monitoring path needs stronger concurrency
@@ -167,7 +102,6 @@ export default function Home() {
 
                     <div className="product-side-card">
                       <div className="product-section-label">Next actions</div>
-
                       <div className="next-action">
                         Add tests for background monitoring debounce and ignore
                         rules
@@ -180,7 +114,6 @@ export default function Home() {
                         Reduce duplicated contract definitions across repo docs
                         and code
                       </div>
-
                       <div className="product-mini-note">
                         Surface drift while you are still inside the repo, not
                         six weeks later when it is harder to unwind.
@@ -194,157 +127,188 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="problem" className="section section-border">
+      {/* ── 2. PAIN ── */}
+      <AnimateIn id="pain" sectionClass="section section-border">
         <div className="container">
-          <SectionHeader
-            eyebrow="The problem"
-            title="Fast repos drift long before they visibly break."
-            description="AI speeds up shipping. It also speeds up inconsistency. The repo can still compile while the structure, assumptions, config, and docs quietly stop matching each other."
-          />
-
-          <div className="three-col">
-            {driftSignals.map((item) => (
-              <div key={item.title} className="card p-6">
-                <h3 className="text-xl font-semibold text-white">
-                  {item.title}
-                </h3>
-                <p className="mt-3 text-sm leading-7 text-white/65">
-                  {item.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section section-border">
-        <div className="container">
-          <SectionHeader
-            eyebrow="Who it is for"
-            title="Built for people moving faster than process can keep up."
-            description="This is for developers and small teams that need a practical signal when the repo starts slipping away from its intended shape."
-          />
-
-          <div className="two-col">
-            {audience.map((item) => (
-              <div key={item} className="audience-item">
-                <div className="audience-dot" />
-                <p>{item}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="how-it-works" className="section section-border">
-        <div className="container">
-          <SectionHeader
-            eyebrow="How it works"
-            title="A simple workflow inside the editor."
-            description="Install it, analyze the repo, review structured issues, and let background monitoring keep an eye on important changes."
-          />
-
-          <div className="four-col">
-            {steps.map((step) => (
-              <div key={step.number} className="card p-6">
-                <div className="step-number">{step.number}</div>
-                <h3 className="mt-4 text-lg font-semibold text-white">
-                  {step.title}
-                </h3>
-                <p className="mt-3 text-sm leading-7 text-white/65">
-                  {step.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section section-border">
-  <div className="container">
-    <SectionHeader
-      eyebrow="Setup"
-      title="Running in under 2 minutes."
-      description="No config files. Sign in in 30 seconds, install the extension, and run your first analysis."
-    />
-
-    <div className="setup-steps">
-      <div className="setup-step">
-        <div className="setup-number">1</div>
-        <div className="setup-content">
-          <div className="setup-title">Install Driftpulse from the VS Code marketplace</div>
-          <div className="setup-desc">Search "Driftpulse" in Extensions or click the install button at the top of this page.</div>
-        </div>
-      </div>
-      <div className="setup-step">
-        <div className="setup-number">2</div>
-        <div className="setup-content">
-          <div className="setup-title">Sign in or add your OpenAI API key</div>
-<div className="setup-desc">Sign in at driftpulse.dev for hosted analysis with no key required. Or run "Driftpulse: Set OpenAI API Key" to use your own.</div>
-        </div>
-      </div>
-      <div className="setup-step">
-        <div className="setup-number">3</div>
-        <div className="setup-content">
-          <div className="setup-title">Open a project folder and run "Driftpulse: Analyze Current Repo"</div>
-          <div className="setup-desc">Results appear in 30-60 seconds. Drift score, issues, and next actions.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-      <section className="section section-border">
-        <div className="container">
-          <div className="beta-layout">
-            <div>
-              <div className="eyebrow">Pricing</div>
-              <h2 className="mt-5 text-3xl font-semibold tracking-tight text-white md:text-5xl">
-                Free to start. Upgrade when you need more.
-              </h2>
-              <p className="mt-5 max-w-xl text-base leading-7 text-white/65 md:text-lg">
-                Install the extension free and analyze with your own OpenAI key. Upgrade to Pro for hosted analyses, full history, and no key required.
+          <h2 className="section-headline">
+            The bugs vibe coding doesn&apos;t warn you about
+          </h2>
+          <div className="three-col pain-grid">
+            <div className="pain-card">
+              <div className="pain-prefix">[WARN] auth_drift</div>
+              <p>
+                You added an API route last Tuesday. It quietly breaks the auth
+                pattern you set up in month one. Neither you nor your AI
+                noticed.
               </p>
-              <div className="beta-points">
-                <div>• Free — 10 analyses/month, BYO API key</div>
-                <div>• Pro — $12/month, 100 analyses, hosted API, full history</div>
-                <div>• Team — $49/month, 500 analyses, priority support</div>
-              </div>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px", justifyContent: "center" }}>
-              <a href="https://marketplace.visualstudio.com/items?itemName=driftpulse.driftpulse" target="_blank" rel="noopener noreferrer" className="button-primary">
-                Install free on VS Code
-              </a>
-              <a href="/pricing" className="button-secondary">
-                View pricing
-              </a>
+            <div className="pain-card">
+              <div className="pain-prefix">[WARN] docs_mismatch</div>
+              <p>
+                Your README describes the architecture you planned. Your
+                codebase is doing something different. Both are wrong in
+                different ways.
+              </p>
+            </div>
+            <div className="pain-card">
+              <div className="pain-prefix">[WARN] config_conflict</div>
+              <p>
+                Two config files are contradicting each other. Everything works
+                fine — until you deploy to prod.
+              </p>
             </div>
           </div>
         </div>
-      </section>
+      </AnimateIn>
 
-      <section className="section section-border">
+      {/* ── 3. OBJECTION ── */}
+      <AnimateIn sectionClass="section section-border">
         <div className="container">
-          <SectionHeader
-  eyebrow="FAQ"
-  title="A few quick answers."
-  description="Everything you need to know before installing."
-/>
+          <div className="objection-outer">
+            <div className="objection-eyebrow">
+              You&apos;re already using AI to write code. Why do you need this?
+            </div>
+            <div className="objection-block">
+              <div className="objection-cursor">›</div>
+              <p className="objection-text">
+                Claude sees your code when you show it. Driftpulse watches your
+                repo when you don&apos;t. It runs in the background, tracks
+                every change, and surfaces the quiet inconsistencies that build
+                up between sessions — the ones you never think to ask about.
+              </p>
+            </div>
+          </div>
+        </div>
+      </AnimateIn>
 
-          <div className="space-y-4">
-            {faqs.map((item) => (
-              <div key={item.question} className="card p-6">
-                <h3 className="text-lg font-semibold text-white">
-                  {item.question}
-                </h3>
-                <p className="mt-3 max-w-3xl text-sm leading-7 text-white/65">
-                  {item.answer}
+      {/* ── 4. HOW IT WORKS ── */}
+      <AnimateIn id="how-it-works" sectionClass="section section-border">
+        <div className="container">
+          <h2 className="section-headline">
+            Three steps. Runs itself after that.
+          </h2>
+          <div className="how-steps">
+            <div className="how-step">
+              <div className="how-step-number">01</div>
+              <div className="how-step-content">
+                <h3>Install the extension from the VS Code marketplace</h3>
+                <p>
+                  Takes 30 seconds. Search &ldquo;Driftpulse&rdquo; in
+                  Extensions or click Install Free above.
                 </p>
               </div>
-            ))}
+            </div>
+            <div className="how-step">
+              <div className="how-step-number">02</div>
+              <div className="how-step-content">
+                <h3>Run your first free scan</h3>
+                <p>
+                  Get a drift score and your top issues immediately — no
+                  account needed for your first analysis.
+                </p>
+              </div>
+            </div>
+            <div className="how-step">
+              <div className="how-step-number">03</div>
+              <div className="how-step-content">
+                <h3>Upgrade to Pro and background monitoring takes over</h3>
+                <p>You get alerted. You don&apos;t have to remember to check.</p>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
+      </AnimateIn>
+
+      {/* ── 5. PRICING ── */}
+      <AnimateIn id="pricing" sectionClass="section section-border">
+        <div className="container">
+          <h2 className="section-headline">
+            Simple pricing. No analysis limits.
+          </h2>
+          <div className="pricing-cards">
+            {/* Free */}
+            <div className="pricing-card pricing-free">
+              <div className="pricing-tier">Free</div>
+              <div className="pricing-price">$0</div>
+              <div className="pricing-tagline">
+                One full scan free. No account needed.
+              </div>
+              <ul className="pricing-features">
+                <li>Drift score for your full repo</li>
+                <li>Top 3 issues with explanations</li>
+                <li>Zero setup</li>
+              </ul>
+              <a
+                href={MARKETPLACE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="pricing-cta pricing-cta-free"
+              >
+                Install Extension
+              </a>
+            </div>
+
+            {/* Pro */}
+            <div className="pricing-card pricing-pro">
+              <div className="pricing-badge-pill">Most Popular</div>
+              <div className="pricing-tier pricing-tier-pro">Pro</div>
+              <div className="pricing-price">
+                $25<span className="pricing-period">/mo</span>
+              </div>
+              <div className="pricing-tagline">
+                Everything you need to stay ahead of drift.
+              </div>
+              <ul className="pricing-features">
+                <li>Unlimited scans</li>
+                <li>Background monitoring</li>
+                <li>Email alerts when drift spikes</li>
+                <li>Full issue history</li>
+                <li>One-click upgrade from VS Code</li>
+              </ul>
+              <a href="/pricing" className="pricing-cta pricing-cta-pro">
+                Start Free Trial
+              </a>
+            </div>
+          </div>
+        </div>
+      </AnimateIn>
+
+      {/* ── 6. SOCIAL PROOF ── */}
+      <AnimateIn sectionClass="section section-border">
+        <div className="container">
+          <h2 className="section-headline">What developers say</h2>
+          <div className="three-col testimonial-grid">
+            <div className="testimonial-placeholder">[TESTIMONIAL]</div>
+            <div className="testimonial-placeholder">[TESTIMONIAL]</div>
+            <div className="testimonial-placeholder">[TESTIMONIAL]</div>
+          </div>
+        </div>
+      </AnimateIn>
+
+      {/* ── 7. FINAL CTA ── */}
+      <AnimateIn sectionClass="section section-border">
+        <div className="container">
+          <div className="final-cta-wrap">
+            <h2 className="final-cta-headline">
+              Your repo is drifting right now.{" "}
+              <span className="final-cta-dim">
+                You just can&apos;t see it yet.
+              </span>
+            </h2>
+            <a
+              href={MARKETPLACE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="button-primary final-cta-button"
+            >
+              Install Free on VS Code
+            </a>
+            <div className="final-cta-trust">
+              Takes 30 seconds. Your first scan is free.
+            </div>
+          </div>
+        </div>
+      </AnimateIn>
 
       <SiteFooter />
     </main>

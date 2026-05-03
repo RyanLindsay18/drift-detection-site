@@ -18,7 +18,9 @@ export default function AuthPage() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    setConnectVscode(params.get("connect_vscode") === "true");
+    const isVscode = params.get("connect_vscode") === "true";
+    setConnectVscode(isVscode);
+    if (isVscode) setMode("signup");
   }, []);
 
   async function handleEmailAuth(e: React.FormEvent) {
@@ -77,11 +79,20 @@ export default function AuthPage() {
         <div style={{ fontSize: "24px", fontWeight: "700", color: "white", letterSpacing: "-0.03em", marginBottom: "4px" }}>
           Driftpulse
         </div>
-        <div style={{ fontSize: "14px", color: "rgba(255,255,255,0.4)", marginBottom: "32px" }}>
+        <div style={{ fontSize: "14px", color: "rgba(255,255,255,0.4)", marginBottom: connectVscode ? "16px" : "32px" }}>
           {connectVscode
-            ? "Sign in to connect the VS Code extension"
+            ? mode === "signup" ? "Create a free account — VS Code connects automatically" : "Sign in to connect VS Code"
             : mode === "signin" ? "Sign in to your account" : "Create your account"}
         </div>
+
+        {/* Value proposition for VS Code flow */}
+        {connectVscode && (
+          <div style={{ marginBottom: "28px", padding: "14px 16px", borderRadius: "12px", background: "rgba(99,179,237,0.06)", border: "1px solid rgba(99,179,237,0.14)" }}>
+            <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.65)", lineHeight: "1.65" }}>
+              Driftpulse gives your repo a <strong style={{ color: "white" }}>drift score</strong> — catching stale docs, architecture gaps, and config mismatches before they slow you down. Free to start, auto-monitors as you code.
+            </div>
+          </div>
+        )}
 
         {/* Google button */}
         <button
@@ -128,7 +139,9 @@ export default function AuthPage() {
             disabled={loading}
             style={{ width: "100%", padding: "12px", borderRadius: "12px", background: "white", color: "#02050a", fontSize: "15px", fontWeight: "600", border: "none", cursor: loading ? "not-allowed" : "pointer", opacity: loading ? 0.6 : 1 }}
           >
-            {loading ? "..." : mode === "signin" ? "Sign in" : "Create account"}
+            {loading ? "..." : mode === "signin"
+            ? connectVscode ? "Sign in & connect VS Code" : "Sign in"
+            : connectVscode ? "Create free account" : "Create account"}
           </button>
         </form>
 
@@ -170,9 +183,9 @@ export default function AuthPage() {
         <div style={{ marginTop: "24px", textAlign: "center", fontSize: "14px", color: "rgba(255,255,255,0.4)" }}>
           {mode === "signin" ? (
             <>
-              No account?{" "}
+              {connectVscode ? "New to Driftpulse?" : "No account?"}{" "}
               <button onClick={() => { setMode("signup"); setError(""); setMessage(""); }} style={{ background: "none", border: "none", color: "white", cursor: "pointer", fontSize: "14px", textDecoration: "underline" }}>
-                Create one
+                {connectVscode ? "Create a free account" : "Create one"}
               </button>
             </>
           ) : (

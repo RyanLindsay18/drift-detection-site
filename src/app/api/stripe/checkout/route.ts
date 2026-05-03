@@ -6,18 +6,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2026-03-25.dahlia",
 });
 
-const PLANS = {
-  pro: {
-    name: "Pro",
-    amount: 1200, // $12.00
-    interval: "month" as const,
-  },
-  team: {
-    name: "Team",
-    amount: 4900, // $49.00
-    interval: "month" as const,
-  },
-};
+const PRO_PRICE_ID = "price_1TSv1PAfQFAxjBxiLTwIxNDJ";
 
 export async function POST(req: NextRequest) {
   try {
@@ -35,28 +24,16 @@ export async function POST(req: NextRequest) {
     }
 
     const { plan } = await req.json();
-    if (!plan || !PLANS[plan as keyof typeof PLANS]) {
+    if (plan !== "pro") {
       return NextResponse.json({ error: "Invalid plan" }, { status: 400 });
     }
-
-    const selectedPlan = PLANS[plan as keyof typeof PLANS];
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "subscription",
       line_items: [
         {
-          price_data: {
-            currency: "usd",
-            product_data: {
-              name: `Driftpulse ${selectedPlan.name}`,
-              description: plan === "pro"
-  ? "100 analyses/month, hosted API, full history"
-  : "500 analyses/month, hosted API, full history, priority support",
-            },
-            recurring: { interval: selectedPlan.interval },
-            unit_amount: selectedPlan.amount,
-          },
+          price: PRO_PRICE_ID,
           quantity: 1,
         },
       ],

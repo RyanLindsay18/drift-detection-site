@@ -30,7 +30,7 @@ export default function SiteHeader() {
             </div>
           </a>
           <nav className="nav-links">
-            <a href="/#problem">Problem</a>
+            <a href="/#pain">Problem</a>
             <a href="/#how-it-works">How it works</a>
             <a href="/pricing">Pricing</a>
           </nav>

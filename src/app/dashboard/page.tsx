@@ -66,7 +66,7 @@ useEffect(() => {
 
     // Handle checkout redirect from pricing page
     const checkoutPlan = params.get("checkout");
-    if (checkoutPlan && (checkoutPlan === "pro" || checkoutPlan === "team")) {
+    if (checkoutPlan && checkoutPlan === "pro") {
       await startCheckout(session.access_token, checkoutPlan);
       return;
     }
@@ -117,7 +117,7 @@ useEffect(() => {
     }
   }
 
-  async function handleUpgrade(plan: "pro" | "team" = "pro") {
+  async function handleUpgrade(plan: "pro" = "pro") {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) { router.push("/auth"); return; }
     await startCheckout(session.access_token, plan);
@@ -136,7 +136,7 @@ useEffect(() => {
     );
   }
 
-  const limitMap: Record<string, number> = { free: 10, pro: 100, team: 500 };
+  const limitMap: Record<string, number> = { free: 0, pro: Infinity };
   const tierLimit = limitMap[profile?.tier ?? "free"] ?? 10;
 
   return (

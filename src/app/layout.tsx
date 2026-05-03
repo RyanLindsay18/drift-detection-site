@@ -4,9 +4,9 @@ import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.driftpulse.dev"),
-  title: "Driftpulse — Repo Drift Detection for AI-Heavy Workflows",
+  title: "Driftpulse — Catch Code Drift Before It Catches You",
   description:
-    "Driftpulse is a VS Code extension that detects code drift, architecture drift, config drift, and docs drift in your repo — built for solo devs and small teams using AI-assisted workflows.",
+    "Driftpulse detects architecture, config, and docs drift in your repo. Built for vibe coders and AI-heavy workflows. Free scan on install.",
   keywords: [
     "repo drift",
     "code drift",
@@ -21,9 +21,9 @@ export const metadata: Metadata = {
     canonical: "https://www.driftpulse.dev",
   },
   openGraph: {
-    title: "Driftpulse — Catch Repo Drift Before It Compounds",
+    title: "Driftpulse — Catch Code Drift Before It Catches You",
     description:
-      "A VS Code extension that detects code drift, architecture drift, config drift, and docs drift. Free to install.",
+      "Driftpulse detects architecture, config, and docs drift in your repo. Built for vibe coders and AI-heavy workflows. Free scan on install.",
     url: "https://www.driftpulse.dev",
     siteName: "Driftpulse",
     type: "website",
@@ -38,9 +38,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Driftpulse — Catch Repo Drift Before It Compounds",
+    title: "Driftpulse — Catch Code Drift Before It Catches You",
     description:
-      "A VS Code extension that detects code drift, architecture drift, config drift, and docs drift. Free to install.",
+      "Driftpulse detects architecture, config, and docs drift in your repo. Built for vibe coders and AI-heavy workflows. Free scan on install.",
     images: ["/og-image.svg"],
   },
   robots: {

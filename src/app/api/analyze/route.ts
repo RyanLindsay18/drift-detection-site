@@ -162,5 +162,35 @@ export async function POST(request: NextRequest) {
 
   console.log('[analyze] success, drift score:', analysis.driftScore)
 
+  // Send first-scan email if this is the user's first completed run
+  if (user.email) {
+    const { count } = await supabaseAdmin
+      .from('analysis_runs')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', user.id)
+
+    if (count === 1) {
+      const topIssues = Array.isArray(analysis.issues)
+        ? (analysis.issues as Array<Record<string, unknown>>)
+            .slice(0, 3)
+            .map(issue => (typeof issue.title === 'string' ? issue.title : ''))
+            .filter(Boolean)
+        : []
+
+      try {
+        const { sendScanCompleteEmail } = await import('@/lib/emails')
+        await sendScanCompleteEmail({
+          userEmail: user.email,
+          driftScore: analysis.driftScore as number,
+          topIssues,
+        })
+        console.log('[analyze] first-scan email sent to', user.email)
+      } catch (emailErr) {
+        // Email failure must not affect the analysis response
+        console.error('[analyze] first-scan email failed:', emailErr)
+      }
+    }
+  }
+
   return NextResponse.json({ ok: true, analysis })
 }
